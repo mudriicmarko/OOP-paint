@@ -4,20 +4,20 @@ public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//Vezbe 2
+		// Vezbe 2
 		Point p = new Point();
-		
+
 		p.setX(10);
 		p.setY(15);
 		p.setSelected(true);
-		
+
 		System.out.println("Koordinata X tačke p je: " + p.getX());
 		System.out.println("Koordinata Y tačke p je: " + p.getY());
 		System.out.println("Obeležje selected tačke p je: " + p.isSelected());
-		
-		//Vezbe 3
+
+		// Vezbe 3
 		System.out.println("Rastojanje izmedju tacaka je: " + p.distance(15, 20));
-		
+
 		Point p1 = new Point();
 		p1.setX(15);
 		p1.setY(27);
@@ -55,7 +55,7 @@ public class Test {
 		// duzine linije l1 umanjene za vrednost zbira x i y
 		// koordinate pocetne tacke linije l1
 
-		l1.getEndPoint().setX((int) (l1.length() - (l1.getStartPoint().getX() + 											l1.getEndPoint().getY())));
+		l1.getEndPoint().setX((int) (l1.length() - (l1.getStartPoint().getX() + l1.getEndPoint().getY())));
 
 		// 6. Postaviti x koordinatu tacke gore levo pravougaonika
 		// r1 na vrednost 10 i y koordinatu na vrednost 15
@@ -80,6 +80,32 @@ public class Test {
 		r1.setWidth(30);
 		c1.getCenter().setX(r1.area() - l1.getStartPoint().getY());
 		System.out.println("X of center of c1 = " + c1.getCenter().getX());
+
+		// Vezbe 4
+		/*
+		 * Postaviti x koordinatu centra ranije kreiranog kruga circle1 na vrednost
+		 * zbira vrednosti poluprečnika kruga circle1 i vrednosti koja predstavlja
+		 * udaljenost početne i krajnje tačke prethodno kreirane linije line1 (koristiti
+		 * metodu distance(), a ne length()).
+		 */
+
+		Circle c3 = new Circle();
+		c3.setRadius(10);
+		c3.setCenter(new Point());
+		c3.getCenter().setX(
+				(int) (c1.getRadius() + l1.getStartPoint().distance(l1.getEndPoint().getX(), l1.getEndPoint().getY())));
+
+		Point p3 = new Point(10, 10);
+		p3.setSelected(true);
+		System.out.println(p3.getX());
+
+		Point p4 = new Point(10, 10, true);
+		System.out.println(p4.isSelected());
+
+		System.out.println(p3.equals(p4));
+		
+		//p3 = p4;
+		System.out.println(p3 == p4);
 
 	}
 
