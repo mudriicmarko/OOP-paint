@@ -1,6 +1,6 @@
 package geometry;
 
-public class Circle {
+public class Circle extends Object {
 
 	private Point center;
 	private int radius;
@@ -29,18 +29,27 @@ public class Circle {
 	}
 
 	public String toString() {
-		return "Center: " + center + ", radius = " + radius;
+		return "Center: " + center.toString() + ", radius = " + radius;
 	}
 
 	public boolean equals(Object obj) {
 		if (obj instanceof Circle) {
 			Circle secondCircle = (Circle) obj;
-			if (this.center.equals(secondCircle.center) && this.radius == secondCircle.radius)
+			if (this.center.equals(secondCircle.center) && 
+					this.radius == secondCircle.radius)
 				return true;
 			else
 				return false;
 		} else
 			return false;
+	}
+	
+	public boolean contains(int x, int y) {
+		return this.center.distance(x, y) <= this.radius;
+	}
+	
+	public boolean contains(Point p) {
+		return this.contains(p.getX(), p.getY());
 	}
 
 	public Point getCenter() {

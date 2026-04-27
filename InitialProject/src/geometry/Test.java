@@ -106,6 +106,10 @@ public class Test {
 		
 		//p3 = p4;
 		System.out.println(p3 == p4);
+		
+		//Vezbe 5
+		Donut d1 = new Donut(p1, 20, 10);
+		System.out.println(d1.toString());
 
 	}
 
