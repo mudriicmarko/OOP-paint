@@ -110,6 +110,12 @@ public class Test {
 		//Vezbe 5
 		Donut d1 = new Donut(p1, 20, 10);
 		System.out.println(d1.toString());
+		
+		//Vezbe 6
+		//Shape shape1 = new Shape();
+		Shape shape1 = new Point(10,10,true);
+		System.out.println(shape1.isSelected());
+		//System.out.println(shape1.getX());
 
 	}
 
