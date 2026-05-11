@@ -2,7 +2,7 @@ package geometry;
 
 import java.awt.Graphics;
 
-public class Rectangle extends Shape{
+public class Rectangle extends Shape {
 
 	private Point upperLeftPoint;
 	private int width;
@@ -38,20 +38,19 @@ public class Rectangle extends Shape{
 	public boolean equals(Object obj) {
 		if (obj instanceof Rectangle) {
 			Rectangle secondRect = (Rectangle) obj;
-			if (this.upperLeftPoint.equals(secondRect.upperLeftPoint) 
-					&& this.width == secondRect.width
+			if (this.upperLeftPoint.equals(secondRect.upperLeftPoint) && this.width == secondRect.width
 					&& this.height == secondRect.height) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public boolean contains(int x, int y) {
-		if (this.upperLeftPoint.getX() <= x && /*levo*/
-				this.upperLeftPoint.getY() <= y && /*iznad*/
-				x <= this.upperLeftPoint.getX() + width /*desno*/ && 
-				y <= this.upperLeftPoint.getY() + height /*ispod*/) {
+		if (this.upperLeftPoint.getX() <= x && /* levo */
+				this.upperLeftPoint.getY() <= y && /* iznad */
+				x <= this.upperLeftPoint.getX() + width /* desno */
+				&& y <= this.upperLeftPoint.getY() + height /* ispod */) {
 			return true;
 		}
 		return false;
@@ -60,11 +59,28 @@ public class Rectangle extends Shape{
 	public Point getUpperLeftPoint() {
 		return upperLeftPoint;
 	}
-	
+
 	@Override
 	public void draw(Graphics g) {
-		g.drawRect(upperLeftPoint.getX(), upperLeftPoint.getY(),
-				width, height);
+		g.drawRect(upperLeftPoint.getX(), upperLeftPoint.getY(), width, height);
+	}
+
+	@Override
+	public void moveTo(int x, int y) {
+		this.upperLeftPoint.moveTo(x, y);
+	}
+
+	@Override
+	public void moveBy(int byX, int byY) {
+		this.upperLeftPoint.moveBy(byX, byY);
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if(o instanceof Rectangle) {
+			return this.area() - ((Rectangle) o).area();
+		}
+		return 0;
 	}
 
 	public void setUpperLeftPoint(Point upperLeftPoint) {
@@ -86,4 +102,5 @@ public class Rectangle extends Shape{
 	public void setHeight(int height) {
 		this.height = height;
 	}
+
 }
