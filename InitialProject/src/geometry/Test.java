@@ -90,7 +90,11 @@ public class Test {
 		 */
 
 		Circle c3 = new Circle();
-		c3.setRadius(10);
+		try {
+			c3.setRadius(-10);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		c3.setCenter(new Point());
 		c3.getCenter().setX(
 				(int) (c1.getRadius() + l1.getStartPoint().distance(l1.getEndPoint().getX(), l1.getEndPoint().getY())));
