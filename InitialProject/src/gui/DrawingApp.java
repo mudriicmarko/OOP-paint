@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import geometry.Shape;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 public class DrawingApp {
 	
@@ -110,15 +112,38 @@ public class DrawingApp {
 
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Tražimo od panela selektovani oblik
+				Shape selected = drawingPanel.getSelectedShape();
 				
-				updateButtonColors(btnDelete); 
+				if (selected == null) {
+					// Ako ništa nije selektovano, predefinisani JOptionPane izbacuje grešku
+					JOptionPane.showMessageDialog(null, "No shape selected for deletion!", "Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+					// Ako postoji selektovan oblik, obavezno ide potvrda sa YES/NO opcijom
+					int option = JOptionPane.showConfirmDialog(null, 
+							"Are you sure you want to delete this shape?", 
+							"Confirm Deletion", 
+							JOptionPane.YES_NO_OPTION);
+					
+					// Ako korisnik potvrdi sa "YES"
+					if (option == JOptionPane.YES_OPTION) {
+						drawingPanel.getShapes().remove(selected); // Izbacujemo ga iz gajbice
+						drawingPanel.repaint(); // Osvežavamo ekran da se ponovo nacrta sve bez njega
+					}
+				}
 			}
 		});
 		
 		btnUnselect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ActiveBtn = "NONE";
+				ActiveBtn = "NONE"; 
 				updateButtonColors(null); 
+				
+			
+				for (Shape s : drawingPanel.getShapes()) {
+					s.setSelected(false);
+				}
+				drawingPanel.repaint(); 
 			}
 		});
 
