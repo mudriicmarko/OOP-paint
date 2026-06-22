@@ -18,7 +18,7 @@ import geometry.Point;
 import geometry.Rectangle;
 import geometry.Shape;
 
-public class DrawingApp {
+public class FrmDrawing {
 	
 	private static String ActiveBtn = "NONE";
 	
@@ -38,7 +38,7 @@ public class DrawingApp {
 
 	public static void main(String[] args) {
 		
-		JFrame frame = new JFrame("Drawing OOIT - Paint");
+		JFrame frame = new JFrame("Paint");
 		frame.setSize(1150, 768); 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		frame.getContentPane().setLayout(new BorderLayout());
@@ -47,16 +47,20 @@ public class DrawingApp {
 		toolbar.setLayout(new FlowLayout(FlowLayout.CENTER));
 		toolbar.setBackground(Color.cyan);
 		
-		btnPoint = new JButton("Tačka");
-		btnLine = new JButton("Linija");
-		btnCircle = new JButton("Krug");
-		btnRectangle = new JButton("Pravougaonik");
-		btnDonut = new JButton("Krofna");
-		btnSelect = new JButton("Selektuj");
-		btnModify = new JButton("Modifikacija");
-		btnDelete = new JButton("Obriši");
-		btnEdgeColor = new JButton("Boja ivice");
-		btnInnerColor = new JButton("Boja unutrašnjosti");
+		JPanel bottomToolbar = new JPanel();
+		bottomToolbar.setLayout(new FlowLayout(FlowLayout.CENTER));
+		bottomToolbar.setBackground(Color.cyan);
+		
+		btnPoint = new JButton("Point");
+		btnLine = new JButton("Line");
+		btnCircle = new JButton("Circle");
+		btnRectangle = new JButton("Rectangle");
+		btnDonut = new JButton("Donut");
+		btnSelect = new JButton("Select");
+		btnModify = new JButton("Modify");
+		btnDelete = new JButton("Delete");
+		btnEdgeColor = new JButton("Edge color");
+		btnInnerColor = new JButton("Inner color");
 		
 		btnEdgeColor.setBackground(edgeColor);
 		btnInnerColor.setBackground(innerColor);
@@ -77,11 +81,11 @@ public class DrawingApp {
 		toolbar.add(btnCircle);
 		toolbar.add(btnRectangle);
 		toolbar.add(btnDonut);
-		toolbar.add(btnSelect);
-		toolbar.add(btnModify);
-		toolbar.add(btnDelete);
-		toolbar.add(btnEdgeColor);
-		toolbar.add(btnInnerColor);
+		bottomToolbar.add(btnSelect);
+		bottomToolbar.add(btnModify);
+		bottomToolbar.add(btnDelete);
+		bottomToolbar.add(btnEdgeColor);
+		bottomToolbar.add(btnInnerColor);
 	
 		btnPoint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -125,7 +129,7 @@ public class DrawingApp {
 			}
 		});
 
-		final DrawingPanel drawingPanel = new DrawingPanel();
+		final PnlDrawing drawingPanel = new PnlDrawing();
 		drawingPanel.setBackground(Color.WHITE); 
 
 		btnDelete.addActionListener(new ActionListener() {
@@ -166,6 +170,7 @@ public class DrawingApp {
 					if (newColor != null) {
 						p.setEdgeColor(newColor);
 					}
+					p.setSelected(false); 
 				} 
 				else if (selected instanceof Line) {
 					Line l = (Line) selected;
@@ -173,6 +178,7 @@ public class DrawingApp {
 					if (newColor != null) {
 						l.setEdgeColor(newColor);
 					}
+					l.setSelected(false); 
 				} 
 				else if (selected instanceof Circle && !(selected instanceof Donut)) {
 					Circle c = (Circle) selected;
@@ -194,6 +200,7 @@ public class DrawingApp {
 							JOptionPane.showMessageDialog(null, e1.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
 						}
 					}
+					c.setSelected(false); 
 				} 
 				else if (selected instanceof Donut) {
 					Donut d = (Donut) selected;
@@ -212,6 +219,7 @@ public class DrawingApp {
 						Color newInner = JColorChooser.showDialog(null, "Izaberi novu boju unutrašnjosti krofne", d.getInnerColor());
 						if (newInner != null) d.setInnerColor(newInner);
 					}
+					d.setSelected(false); 
 				} 
 				else if (selected instanceof Rectangle) {
 					Rectangle r = (Rectangle) selected;
@@ -230,8 +238,10 @@ public class DrawingApp {
 						Color newInner = JColorChooser.showDialog(null, "Izaberi novu boju unutrašnjosti pravougaonika", r.getInnerColor());
 						if (newInner != null) r.setInnerColor(newInner);
 					}
+					r.setSelected(false);
 				}
 				
+				btnInnerColor.setEnabled(true); 
 				drawingPanel.repaint(); 
 			}
 		});
@@ -257,6 +267,7 @@ public class DrawingApp {
 		});
 
 		frame.getContentPane().add(toolbar, BorderLayout.NORTH); 
+		frame.getContentPane().add(bottomToolbar, BorderLayout.SOUTH); 
 		frame.getContentPane().add(drawingPanel, BorderLayout.CENTER); 
 
 		frame.setVisible(true);
