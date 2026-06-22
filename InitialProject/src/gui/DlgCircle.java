@@ -92,4 +92,12 @@ public class DlgCircle extends JDialog {
 	public int getRadius() {
 		return Integer.parseInt(txtRadius.getText().trim());
 	}
+
+
+
+
+	public void setTxtRadiusText(String valueOf) {
+		// TODO Auto-generated method stub
+		
+	}
 }

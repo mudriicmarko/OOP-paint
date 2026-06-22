@@ -51,13 +51,18 @@ public class Point extends Shape {
 
 	@Override
 	public void draw(Graphics g) {
-		if(selected) {
-			g.setColor(Color.BLUE);
-			g.drawRect(x-2, y-2, 4, 4);
-			g.setColor(Color.BLACK);
-		}
+		
+		g.setColor(getEdgeColor());
+		
+		
 		g.drawLine(x - 2, y, x + 2, y);
 		g.drawLine(x, y + 2, x, y - 2);
+		
+		
+		if (selected) {
+			g.setColor(Color.BLUE);
+			g.drawRect(x - 2, y - 2, 4, 4);
+		}
 	}
 	
 	@Override
@@ -94,5 +99,15 @@ public class Point extends Shape {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	@Override
+	public void setEdgeColor(Color edgeColor) {
+	    super.setEdgeColor(edgeColor);
+	}
+
+	@Override
+	public Color getEdgeColor() {
+	    return super.getEdgeColor();
 	}
 }

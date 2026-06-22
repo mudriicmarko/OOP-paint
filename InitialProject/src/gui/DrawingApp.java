@@ -1,37 +1,45 @@
 package gui;
 
 import java.awt.BorderLayout;
-import geometry.Shape;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import geometry.Circle;
+import geometry.Donut;
+import geometry.Line;
+import geometry.Point;
+import geometry.Rectangle;
+import geometry.Shape;
 
 public class DrawingApp {
 	
 	private static String ActiveBtn = "NONE";
 	
+	private static Color edgeColor = Color.BLACK;
+	private static Color innerColor = Color.WHITE;
 	
 	private static JButton btnPoint;
 	private static JButton btnLine;
 	private static JButton btnCircle;
 	private static JButton btnRectangle;
+	private static JButton btnDonut;
 	private static JButton btnSelect;
+	private static JButton btnModify; 
 	private static JButton btnDelete;
-	private static JButton btnUnselect;
-	
-	
-	
-	
+	private static JButton btnEdgeColor;
+	public static JButton btnInnerColor;
 
 	public static void main(String[] args) {
 		
 		JFrame frame = new JFrame("Drawing OOIT - Paint");
-		frame.setSize(1024, 768); 
+		frame.setSize(1150, 768); 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		frame.getContentPane().setLayout(new BorderLayout());
 		
@@ -39,38 +47,41 @@ public class DrawingApp {
 		toolbar.setLayout(new FlowLayout(FlowLayout.CENTER));
 		toolbar.setBackground(Color.cyan);
 		
-		
 		btnPoint = new JButton("Tačka");
 		btnLine = new JButton("Linija");
 		btnCircle = new JButton("Krug");
 		btnRectangle = new JButton("Pravougaonik");
+		btnDonut = new JButton("Krofna");
 		btnSelect = new JButton("Selektuj");
+		btnModify = new JButton("Modifikacija");
 		btnDelete = new JButton("Obriši");
-		btnUnselect = new JButton("Deselektuj");
+		btnEdgeColor = new JButton("Boja ivice");
+		btnInnerColor = new JButton("Boja unutrašnjosti");
 		
-		
+		btnEdgeColor.setBackground(edgeColor);
+		btnInnerColor.setBackground(innerColor);
 		
 		btnPoint.setFocusPainted(false);
 		btnLine.setFocusPainted(false);
 		btnCircle.setFocusPainted(false);
 		btnRectangle.setFocusPainted(false);
+		btnDonut.setFocusPainted(false);
 		btnSelect.setFocusPainted(false);
+		btnModify.setFocusPainted(false);
 		btnDelete.setFocusPainted(false);
-		btnUnselect.setFocusPainted(false);
-		
-		//Ove linije brisu pravougaonik oko teksta u buttonima
-		
-		
-		
-		
+		btnEdgeColor.setFocusPainted(false);
+		btnInnerColor.setFocusPainted(false);
 		
 		toolbar.add(btnPoint);
 		toolbar.add(btnLine);
 		toolbar.add(btnCircle);
 		toolbar.add(btnRectangle);
+		toolbar.add(btnDonut);
 		toolbar.add(btnSelect);
+		toolbar.add(btnModify);
 		toolbar.add(btnDelete);
-		toolbar.add(btnUnselect);
+		toolbar.add(btnEdgeColor);
+		toolbar.add(btnInnerColor);
 	
 		btnPoint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -100,6 +111,13 @@ public class DrawingApp {
 			}
 		});
 
+		btnDonut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ActiveBtn = "DONUT";
+				updateButtonColors(btnDonut); 
+			}
+		});
+
 		btnSelect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActiveBtn = "SELECT";
@@ -107,43 +125,134 @@ public class DrawingApp {
 			}
 		});
 
-		DrawingPanel drawingPanel = new DrawingPanel();
+		final DrawingPanel drawingPanel = new DrawingPanel();
 		drawingPanel.setBackground(Color.WHITE); 
 
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Tražimo od panela selektovani oblik
+				updateButtonColors(btnDelete); 
 				Shape selected = drawingPanel.getSelectedShape();
 				
 				if (selected == null) {
-					// Ako ništa nije selektovano, predefinisani JOptionPane izbacuje grešku
 					JOptionPane.showMessageDialog(null, "No shape selected for deletion!", "Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-					// Ako postoji selektovan oblik, obavezno ide potvrda sa YES/NO opcijom
 					int option = JOptionPane.showConfirmDialog(null, 
 							"Are you sure you want to delete this shape?", 
 							"Confirm Deletion", 
 							JOptionPane.YES_NO_OPTION);
 					
-					// Ako korisnik potvrdi sa "YES"
 					if (option == JOptionPane.YES_OPTION) {
-						drawingPanel.getShapes().remove(selected); // Izbacujemo ga iz gajbice
-						drawingPanel.repaint(); // Osvežavamo ekran da se ponovo nacrta sve bez njega
+						drawingPanel.getShapes().remove(selected);
+						drawingPanel.repaint();
+						btnInnerColor.setEnabled(true);
 					}
 				}
 			}
 		});
 		
-		btnUnselect.addActionListener(new ActionListener() {
+		btnModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ActiveBtn = "NONE"; 
-				updateButtonColors(null); 
+				updateButtonColors(btnModify);
+				Shape selected = drawingPanel.getSelectedShape();
 				
-			
-				for (Shape s : drawingPanel.getShapes()) {
-					s.setSelected(false);
+				if (selected == null) {
+					JOptionPane.showMessageDialog(null, "Please select a shape first!", "Error", JOptionPane.ERROR_MESSAGE);
+					return; 
 				}
+				
+				if (selected instanceof Point) {
+					Point p = (Point) selected;
+					Color newColor = JColorChooser.showDialog(null, "Izaberi novu boju tačke", p.getEdgeColor());
+					if (newColor != null) {
+						p.setEdgeColor(newColor);
+					}
+				} 
+				else if (selected instanceof Line) {
+					Line l = (Line) selected;
+					Color newColor = JColorChooser.showDialog(null, "Izaberi novu boju linije", l.getEdgeColor());
+					if (newColor != null) {
+						l.setEdgeColor(newColor);
+					}
+				} 
+				else if (selected instanceof Circle && !(selected instanceof Donut)) {
+					Circle c = (Circle) selected;
+					DlgCircle dialog = new DlgCircle();
+					dialog.setTxtRadiusText(String.valueOf(c.getRadius())); 
+					dialog.setVisible(true);
+					
+					if (dialog.isConfirm()) {
+						try {
+							c.setRadius(dialog.getRadius());
+							
+							Color newEdge = JColorChooser.showDialog(null, "Izaberi novu boju ivice kruga", c.getEdgeColor());
+							if (newEdge != null) c.setEdgeColor(newEdge);
+							
+							Color newInner = JColorChooser.showDialog(null, "Izaberi novu boju unutrašnjosti kruga", c.getInnerColor());
+							if (newInner != null) c.setInnerColor(newInner);
+							
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, e1.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				} 
+				else if (selected instanceof Donut) {
+					Donut d = (Donut) selected;
+					DlgDonut dialog = new DlgDonut();
+					dialog.setTxtInnerRadiusText(String.valueOf(d.getInnerRadius()));
+					dialog.setTxtOuterRadiusText(String.valueOf(d.getOuterRadius()));
+					dialog.setVisible(true);
+					
+					if (dialog.isConfirm()) {
+						d.setInnerRadius(dialog.getInnerRadius());
+						d.setOuterRadius(dialog.getOuterRadius());
+						
+						Color newEdge = JColorChooser.showDialog(null, "Izaberi novu boju ivice krofne", d.getEdgeColor());
+						if (newEdge != null) d.setEdgeColor(newEdge);
+						
+						Color newInner = JColorChooser.showDialog(null, "Izaberi novu boju unutrašnjosti krofne", d.getInnerColor());
+						if (newInner != null) d.setInnerColor(newInner);
+					}
+				} 
+				else if (selected instanceof Rectangle) {
+					Rectangle r = (Rectangle) selected;
+					DlgRectangle dialog = new DlgRectangle();
+					dialog.setTxtWidthText(String.valueOf(r.getRectangleWidth()));
+					dialog.setTxtHeightText(String.valueOf(r.getRectangleHeight()));
+					dialog.setVisible(true);
+					
+					if (dialog.isConfirm()) {
+						r.setWidth(dialog.getRectangleWidth());
+						r.setHeight(dialog.getRectangleHeight());
+						
+						Color newEdge = JColorChooser.showDialog(null, "Izaberi novu boju ivice pravougaonika", r.getEdgeColor());
+						if (newEdge != null) r.setEdgeColor(newEdge);
+						
+						Color newInner = JColorChooser.showDialog(null, "Izaberi novu boju unutrašnjosti pravougaonika", r.getInnerColor());
+						if (newInner != null) r.setInnerColor(newInner);
+					}
+				}
+				
 				drawingPanel.repaint(); 
+			}
+		});
+
+		btnEdgeColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Color chosenColor = JColorChooser.showDialog(null, "Choose Edge Color", edgeColor);
+				if (chosenColor != null) {
+					edgeColor = chosenColor;
+					btnEdgeColor.setBackground(edgeColor);
+				}
+			}
+		});
+
+		btnInnerColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Color chosenColor = JColorChooser.showDialog(null, "Choose Inner Color", innerColor);
+				if (chosenColor != null) {
+					innerColor = chosenColor;
+					btnInnerColor.setBackground(innerColor);
+				}
 			}
 		});
 
@@ -154,8 +263,7 @@ public class DrawingApp {
 	}
 
 	private static void updateButtonColors(JButton clickedButton) {
-		JButton[] buttons = {btnPoint, btnLine, btnCircle, btnRectangle, btnSelect, btnDelete};
-		
+		JButton[] buttons = {btnPoint, btnLine, btnCircle, btnRectangle, btnDonut, btnSelect, btnDelete, btnModify};
 		for (JButton btn : buttons) {
 			if (btn == clickedButton) {
 				btn.setBackground(Color.white);
@@ -167,7 +275,7 @@ public class DrawingApp {
 		}
 	}
 
-	public static String getActiveMode() {
-		return ActiveBtn;
-	}		
+	public static String getActiveMode() { return ActiveBtn; }
+	public static Color getEdgeColor() { return edgeColor; }
+	public static Color getInnerColor() { return innerColor; }		
 }

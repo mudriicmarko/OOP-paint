@@ -100,4 +100,16 @@ public class DlgDonut extends JDialog {
 	public int getOuterRadius() {
 		return Integer.parseInt(txtOuterRadius.getText().trim());
 	}
+
+
+	public void setTxtInnerRadiusText(String valueOf) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void setTxtOuterRadiusText(String valueOf) {
+		// TODO Auto-generated method stub
+		
+	}
 }

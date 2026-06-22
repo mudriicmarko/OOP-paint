@@ -99,4 +99,16 @@ public class DlgRectangle extends JDialog {
 	public int getRectangleHeight() {
 		return Integer.parseInt(txtHeight.getText().trim());
 	}
+
+
+	public void setTxtWidthText(String valueOf) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void setTxtHeightText(String valueOf) {
+		// TODO Auto-generated method stub
+		
+	}
 }

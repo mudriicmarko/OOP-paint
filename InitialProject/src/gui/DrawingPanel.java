@@ -25,7 +25,6 @@ public class DrawingPanel extends JPanel {
 				
 				String mode = DrawingApp.getActiveMode();
 
-		
 				if (mode.equals("NONE")) {
 					return; 
 				}
@@ -33,9 +32,9 @@ public class DrawingPanel extends JPanel {
 				int x = e.getX();
 				int y = e.getY();
 				
-				
 				if (mode.equals("POINT")) {
 					Point p = new Point(x, y);
+					p.setEdgeColor(DrawingApp.getEdgeColor());
 					shapes.add(p); 
 					
 				} else if (mode.equals("LINE")) {
@@ -44,6 +43,7 @@ public class DrawingPanel extends JPanel {
 					} else {
 						Point endPoint = new Point(x, y);
 						Line l = new Line(startPoint, endPoint);
+						l.setEdgeColor(DrawingApp.getEdgeColor());
 						shapes.add(l);
 						startPoint = null; 
 					}
@@ -56,6 +56,8 @@ public class DrawingPanel extends JPanel {
 						int radius = dialog.getRadius(); 
 						Point center = new Point(x, y);  
 						Circle c = new Circle(center, radius);
+						c.setEdgeColor(DrawingApp.getEdgeColor());
+						c.setInnerColor(DrawingApp.getInnerColor());
 						shapes.add(c);
 					}
 					
@@ -68,6 +70,8 @@ public class DrawingPanel extends JPanel {
 						int height = dialog.getRectangleHeight();
 						Point upperLeft = new Point(x, y); 
 						Rectangle r = new Rectangle(upperLeft, width, height);
+						r.setEdgeColor(DrawingApp.getEdgeColor());
+						r.setInnerColor(DrawingApp.getInnerColor());
 						shapes.add(r);
 					}
 					
@@ -79,15 +83,15 @@ public class DrawingPanel extends JPanel {
 						int innerRadius = dialog.getInnerRadius();
 						int outerRadius = dialog.getOuterRadius();
 						Point center = new Point(x, y);
-						Donut d = new Donut(center, innerRadius, outerRadius);
+						Donut d = new Donut(center, outerRadius, innerRadius);
+						d.setEdgeColor(DrawingApp.getEdgeColor());
+						d.setInnerColor(DrawingApp.getInnerColor());
 						shapes.add(d);
 					}
 				} 
-				
 				else if (mode.equals("SELECT")) {
 					Shape selectedShape = null;
 
-					
 					for (int i = shapes.size() - 1; i >= 0; i--) {
 						Shape s = shapes.get(i);
 						if (s.contains(x, y)) {
@@ -96,13 +100,22 @@ public class DrawingPanel extends JPanel {
 						}
 					}
 
-					
 					for (Shape s : shapes) {
 						if (s == selectedShape) {
 							s.setSelected(!s.isSelected()); 
 						} else {
 							s.setSelected(false);
 						}
+					}
+
+					if (selectedShape != null && selectedShape.isSelected()) {
+						if (selectedShape instanceof Point || selectedShape instanceof Line) {
+							DrawingApp.btnInnerColor.setEnabled(false);
+						} else {
+							DrawingApp.btnInnerColor.setEnabled(true);
+						}
+					} else {
+						DrawingApp.btnInnerColor.setEnabled(true);
 					}
 				}
 				
@@ -120,15 +133,11 @@ public class DrawingPanel extends JPanel {
 			}
 		}
 	}
-
-	// --- POMOĆNE METODE ZA KOMUNIKACIJU SA GLAVNOM FORMOM ---
 	
-	// Vraća celu listu oblika
 	public ArrayList<Shape> getShapes() {
 		return this.shapes;
 	}
 
-	// Traži i vraća trenutno selektovani oblik (ili null ako nema nijednog)
 	public Shape getSelectedShape() {
 		for (Shape s : shapes) {
 			if (s.isSelected()) {

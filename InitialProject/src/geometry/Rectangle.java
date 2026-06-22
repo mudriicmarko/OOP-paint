@@ -48,10 +48,10 @@ public class Rectangle extends Shape {
 	}
 
 	public boolean contains(int x, int y) {
-		if (this.upperLeftPoint.getX() <= x && /* levo */
-				this.upperLeftPoint.getY() <= y && /* iznad */
-				x <= this.upperLeftPoint.getX() + width /* desno */
-				&& y <= this.upperLeftPoint.getY() + height /* ispod */) {
+		if (this.upperLeftPoint.getX() <= x && 
+				this.upperLeftPoint.getY() <= y && 
+				x <= this.upperLeftPoint.getX() + width 
+				&& y <= this.upperLeftPoint.getY() + height ) {
 			return true;
 		}
 		return false;
@@ -60,22 +60,30 @@ public class Rectangle extends Shape {
 	public Point getUpperLeftPoint() {
 		return upperLeftPoint;
 	}
+	
+	
+	public Point getUpperLeft() {
+		return upperLeftPoint;
+	}
 
 	@Override
 	public void draw(Graphics g) {
-		if (selected) {
-			g.setColor(Color.BLUE);
-			g.drawRect(upperLeftPoint.getX() - 2, 
-					upperLeftPoint.getY() - 2, 4, 4);
-			g.drawRect(upperLeftPoint.getX() + width - 2, 
-					upperLeftPoint.getY() - 2, 4, 4);
-			g.drawRect(upperLeftPoint.getX() - 2, 
-					upperLeftPoint.getY() + height - 2, 4, 4);
-			g.drawRect(upperLeftPoint.getX() + width - 2, 
-					upperLeftPoint.getY() + height - 2, 4, 4);
-			g.setColor(Color.BLACK);
-		}
+	
+		g.setColor(getInnerColor());
+		g.fillRect(upperLeftPoint.getX(), upperLeftPoint.getY(), width, height);
+		
+		
+		g.setColor(getEdgeColor());
 		g.drawRect(upperLeftPoint.getX(), upperLeftPoint.getY(), width, height);
+		
+		
+		if (isSelected()) {
+			g.setColor(Color.BLUE);
+			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() - 2, 4, 4);
+			g.drawRect(upperLeftPoint.getX() + width - 2, upperLeftPoint.getY() - 2, 4, 4);
+			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() + height - 2, 4, 4);
+			g.drawRect(upperLeftPoint.getX() + width - 2, upperLeftPoint.getY() + height - 2, 4, 4);
+		}
 	}
 
 	@Override
@@ -103,6 +111,11 @@ public class Rectangle extends Shape {
 	public int getWidth() {
 		return width;
 	}
+	
+	
+	public int getRectangleWidth() {
+		return width;
+	}
 
 	public void setWidth(int width) {
 		this.width = width;
@@ -111,9 +124,24 @@ public class Rectangle extends Shape {
 	public int getHeight() {
 		return height;
 	}
+	
+	
+	public int getRectangleHeight() {
+		return height;
+	}
 
 	public void setHeight(int height) {
 		this.height = height;
 	}
 
+
+	@Override
+	public void setEdgeColor(Color edgeColor) {
+		super.setEdgeColor(edgeColor);
+	}
+
+	@Override
+	public void setInnerColor(Color innerColor) {
+		super.setInnerColor(innerColor);
+	}
 }
