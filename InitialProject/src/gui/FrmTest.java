@@ -233,15 +233,14 @@ public class FrmTest extends JFrame {
 				if (dlgTest.isOK) {
 					dlm.addElement(dlgTest.getTxtCrvena().getText() + " " + dlgTest.getTxtZelena().getText() + " "
 							+ dlgTest.getTxtPlava().getText());
-					pnlCenter.setBackground(
-							new Color(Integer.parseInt(dlgTest.getTxtCrvena().getText()),
-							Integer.parseInt(dlgTest.getTxtZelena().getText()), 
+					pnlCenter.setBackground(new Color(Integer.parseInt(dlgTest.getTxtCrvena().getText()),
+							Integer.parseInt(dlgTest.getTxtZelena().getText()),
 							Integer.parseInt(dlgTest.getTxtPlava().getText())));
 				}
 			}
 		});
 		pnlSouth.add(btnDodajBoju);
-		
+
 		JButton btnIzmeniBoju = new JButton("Izmeni boju");
 		btnIzmeniBoju.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -252,32 +251,28 @@ public class FrmTest extends JFrame {
 					dlgTest.getTxtZelena().setText(split[1]);
 					dlgTest.getTxtPlava().setText(split[2]);
 					dlgTest.setVisible(true);
-					
+
 					if (dlgTest.isOK) {
 						dlm.removeElementAt(lstBoje.getSelectedIndex());
 						dlm.addElement(dlgTest.getTxtCrvena().getText() + " " + dlgTest.getTxtZelena().getText() + " "
 								+ dlgTest.getTxtPlava().getText());
-						pnlCenter.setBackground(
-								new Color(Integer.parseInt(dlgTest.getTxtCrvena().getText()),
-								Integer.parseInt(dlgTest.getTxtZelena().getText()), 
+						pnlCenter.setBackground(new Color(Integer.parseInt(dlgTest.getTxtCrvena().getText()),
+								Integer.parseInt(dlgTest.getTxtZelena().getText()),
 								Integer.parseInt(dlgTest.getTxtPlava().getText())));
 					}
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(null, 
-							"Morate selektovati RGB boju!", 
-							"Upozorenje",
+					JOptionPane.showMessageDialog(null, "Morate selektovati RGB boju!", "Upozorenje",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 		pnlSouth.add(btnIzmeniBoju);
-		
+
 		JButton btnPozadina = new JButton("Boja pozadine");
 		btnPozadina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Color bgdColor = JColorChooser.showDialog(null, 
-						"Boja pozadine", Color.black);
-				if(bgdColor != null) {
+				Color bgdColor = JColorChooser.showDialog(null, "Boja pozadine", Color.black);
+				if (bgdColor != null) {
 					pnlCenter.setBackground(bgdColor);
 				}
 			}

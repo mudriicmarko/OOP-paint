@@ -48,7 +48,7 @@ public class Line extends Shape {
 	public void draw(Graphics g) {
 		g.setColor(getEdgeColor());
 		g.drawLine(startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY());
-		
+
 		if (selected) {
 			g.setColor(Color.BLUE);
 			g.drawRect(startPoint.getX() - 2, startPoint.getY() - 2, 4, 4);
@@ -70,7 +70,7 @@ public class Line extends Shape {
 	@Override
 	public int compareTo(Object o) {
 		if (o instanceof Line) {
-			return (int)(this.length() - ((Line) o).length());
+			return (int) (this.length() - ((Line) o).length());
 		}
 		return 0;
 	}

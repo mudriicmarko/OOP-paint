@@ -17,26 +17,25 @@ public class DlgRectangle extends JDialog {
 
 	private JTextField txtWidth;
 	private JTextField txtHeight;
-	private boolean confirm = false; 
+	private boolean confirm = false;
 
 	public DlgRectangle() {
-		
+
 		setModal(true);
 		setTitle("Rectangle properties");
-		setSize(300, 180); 
-		setLocationRelativeTo(null); 
+		setSize(300, 180);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 
-	
 		JPanel pnlCenter = new JPanel();
-		pnlCenter.setLayout(new GridLayout(2, 2, 5, 5)); 
-		
+		pnlCenter.setLayout(new GridLayout(2, 2, 5, 5));
+
 		JLabel lblWidth = new JLabel("Width:", SwingConstants.CENTER);
 		txtWidth = new JTextField();
-		
+
 		JLabel lblHeight = new JLabel("Height:", SwingConstants.CENTER);
 		txtHeight = new JTextField();
-		
+
 		pnlCenter.add(lblWidth);
 		pnlCenter.add(txtWidth);
 		pnlCenter.add(lblHeight);
@@ -46,47 +45,43 @@ public class DlgRectangle extends JDialog {
 		// 2. Donji panel za dugmiće
 		JPanel pnlButtons = new JPanel();
 		pnlButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		
+
 		JButton btnOK = new JButton("OK");
 		JButton btnCancel = new JButton("Cancel");
-		
+
 		pnlButtons.add(btnOK);
 		pnlButtons.add(btnCancel);
 		getContentPane().add(pnlButtons, BorderLayout.SOUTH);
 
-
-
-
 		btnOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		
+
 				try {
 					int width = Integer.parseInt(txtWidth.getText().trim());
 					int height = Integer.parseInt(txtHeight.getText().trim());
-					
-				
+
 					if (width <= 0 || height <= 0) {
-						JOptionPane.showMessageDialog(null, "Width and Height must be greater than 0!", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Width and Height must be greater than 0!", "Error",
+								JOptionPane.ERROR_MESSAGE);
 					} else {
-						confirm = true;    
-						setVisible(false); 
+						confirm = true;
+						setVisible(false);
 					}
 				} catch (NumberFormatException nfe) {
-			
-					JOptionPane.showMessageDialog(null, "Please enter valid integer numbers!", "Error", JOptionPane.ERROR_MESSAGE);
+
+					JOptionPane.showMessageDialog(null, "Please enter valid integer numbers!", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
-
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				confirm = false; 
+				confirm = false;
 				setVisible(false);
 			}
 		});
 	}
-
 
 	public boolean isConfirm() {
 		return confirm;
@@ -100,15 +95,13 @@ public class DlgRectangle extends JDialog {
 		return Integer.parseInt(txtHeight.getText().trim());
 	}
 
-
 	public void setTxtWidthText(String valueOf) {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 	public void setTxtHeightText(String valueOf) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

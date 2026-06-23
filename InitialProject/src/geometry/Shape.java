@@ -5,15 +5,14 @@ import java.awt.Graphics;
 
 public abstract class Shape implements Moveable, Comparable {
 	protected boolean selected;
-	
-	
-	private Color edgeColor = Color.BLACK;  
-	private Color innerColor = Color.WHITE; 
+
+	private Color edgeColor = Color.BLACK;
+	private Color innerColor = Color.WHITE;
 
 	public Shape() {
 
 	}
-	
+
 	public Shape(boolean selected) {
 		this.selected = selected;
 	}
@@ -30,7 +29,6 @@ public abstract class Shape implements Moveable, Comparable {
 		this.selected = selected;
 	}
 
-	
 	public void setEdgeColor(Color edgeColor) {
 		this.edgeColor = edgeColor;
 	}
@@ -39,7 +37,6 @@ public abstract class Shape implements Moveable, Comparable {
 		this.innerColor = innerColor;
 	}
 
-	
 	public Color getEdgeColor() {
 		return edgeColor;
 	}

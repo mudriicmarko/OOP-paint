@@ -51,20 +51,18 @@ public class Point extends Shape {
 
 	@Override
 	public void draw(Graphics g) {
-		
+
 		g.setColor(getEdgeColor());
-		
-		
+
 		g.drawLine(x - 2, y, x + 2, y);
 		g.drawLine(x, y + 2, x, y - 2);
-		
-		
+
 		if (selected) {
 			g.setColor(Color.BLUE);
 			g.drawRect(x - 2, y - 2, 4, 4);
 		}
 	}
-	
+
 	@Override
 	public void moveTo(int x, int y) {
 		this.x = x;
@@ -79,8 +77,8 @@ public class Point extends Shape {
 
 	@Override
 	public int compareTo(Object o) {
-		if(o instanceof Point) {
-			return (int)(this.distance(0, 0) - ((Point)o).distance(0,0));
+		if (o instanceof Point) {
+			return (int) (this.distance(0, 0) - ((Point) o).distance(0, 0));
 		}
 		return 0;
 	}
@@ -103,11 +101,11 @@ public class Point extends Shape {
 
 	@Override
 	public void setEdgeColor(Color edgeColor) {
-	    super.setEdgeColor(edgeColor);
+		super.setEdgeColor(edgeColor);
 	}
 
 	@Override
 	public Color getEdgeColor() {
-	    return super.getEdgeColor();
+		return super.getEdgeColor();
 	}
 }

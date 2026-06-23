@@ -107,19 +107,19 @@ public class Test {
 		System.out.println(p4.isSelected());
 
 		System.out.println(p3.equals(p4));
-		
-		//p3 = p4;
+
+		// p3 = p4;
 		System.out.println(p3 == p4);
-		
-		//Vezbe 5
+
+		// Vezbe 5
 		Donut d1 = new Donut(p1, 20, 10);
 		System.out.println(d1.toString());
-		
-		//Vezbe 6
-		//Shape shape1 = new Shape();
-		Shape shape1 = new Point(10,10,true);
+
+		// Vezbe 6
+		// Shape shape1 = new Shape();
+		Shape shape1 = new Point(10, 10, true);
 		System.out.println(shape1.isSelected());
-		//System.out.println(shape1.getX());
+		// System.out.println(shape1.getX());
 
 	}
 

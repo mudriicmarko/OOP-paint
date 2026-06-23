@@ -151,15 +151,11 @@ public class DlgTest extends JDialog {
 							if (red >= 0 && red < 256 && green >= 0 && green < 256 && blue >= 0 && blue < 256) {
 								isOK = true;
 							} else {
-								JOptionPane.showMessageDialog(null, 
-										"Vrednosti moraju biti u opsegu!", 
-										"Upozorenje",
+								JOptionPane.showMessageDialog(null, "Vrednosti moraju biti u opsegu!", "Upozorenje",
 										JOptionPane.ERROR_MESSAGE);
 							}
 						} catch (NumberFormatException e1) {
-							JOptionPane.showMessageDialog(null, 
-									"Vrednosti moraju biti brojevi!", 
-									"Upozorenje",
+							JOptionPane.showMessageDialog(null, "Vrednosti moraju biti brojevi!", "Upozorenje",
 									JOptionPane.ERROR_MESSAGE);
 						}
 						setVisible(false);

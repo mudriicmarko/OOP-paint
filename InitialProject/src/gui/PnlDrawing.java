@@ -31,9 +31,8 @@ public class PnlDrawing extends JPanel {
 					Point p = new Point(x, y);
 					p.setEdgeColor(FrmDrawing.getEdgeColor());
 					shapes.add(p);
-					startPointLine = null; 
-				} 
-				else if (mode.equals("LINE")) {
+					startPointLine = null;
+				} else if (mode.equals("LINE")) {
 					if (startPointLine == null) {
 						startPointLine = new Point(x, y);
 					} else {
@@ -41,14 +40,13 @@ public class PnlDrawing extends JPanel {
 						Line line = new Line(startPointLine, endPoint);
 						line.setEdgeColor(FrmDrawing.getEdgeColor());
 						shapes.add(line);
-						startPointLine = null; 
+						startPointLine = null;
 					}
-				} 
-				else if (mode.equals("CIRCLE")) {
+				} else if (mode.equals("CIRCLE")) {
 					startPointLine = null;
 					DlgCircle dialog = new DlgCircle();
 					dialog.setVisible(true);
-					
+
 					if (dialog.isConfirm()) {
 						try {
 							Circle c = new Circle(new Point(x, y), dialog.getRadius());
@@ -59,36 +57,33 @@ public class PnlDrawing extends JPanel {
 							JOptionPane.showMessageDialog(null, ex.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
 						}
 					}
-				} 
-				else if (mode.equals("RECTANGLE")) {
+				} else if (mode.equals("RECTANGLE")) {
 					startPointLine = null;
 					DlgRectangle dialog = new DlgRectangle();
 					dialog.setVisible(true);
-					
+
 					if (dialog.isConfirm()) {
-						Rectangle r = new Rectangle(new Point(x, y), dialog.getRectangleWidth(), dialog.getRectangleHeight());
+						Rectangle r = new Rectangle(new Point(x, y), dialog.getRectangleWidth(),
+								dialog.getRectangleHeight());
 						r.setEdgeColor(FrmDrawing.getEdgeColor());
 						r.setInnerColor(FrmDrawing.getInnerColor());
 						shapes.add(r);
 					}
-				} 
-				else if (mode.equals("DONUT")) {
+				} else if (mode.equals("DONUT")) {
 					startPointLine = null;
 					DlgDonut dialog = new DlgDonut();
 					dialog.setVisible(true);
-					
+
 					if (dialog.isConfirm()) {
 						Donut d = new Donut(new Point(x, y), dialog.getOuterRadius(), dialog.getInnerRadius());
 						d.setEdgeColor(FrmDrawing.getEdgeColor());
 						d.setInnerColor(FrmDrawing.getInnerColor());
 						shapes.add(d);
 					}
-				} 
-				else if (mode.equals("SELECT")) {
+				} else if (mode.equals("SELECT")) {
 					startPointLine = null;
 					Shape clickedShape = null;
 
-					
 					for (int i = shapes.size() - 1; i >= 0; i--) {
 						if (shapes.get(i).contains(x, y)) {
 							clickedShape = shapes.get(i);
@@ -97,7 +92,7 @@ public class PnlDrawing extends JPanel {
 					}
 
 					if (clickedShape != null) {
-					
+
 						if (clickedShape.isSelected()) {
 							clickedShape.setSelected(false);
 						} else {
@@ -107,13 +102,13 @@ public class PnlDrawing extends JPanel {
 							clickedShape.setSelected(true);
 						}
 					} else {
-					
+
 						for (Shape s : shapes) {
 							s.setSelected(false);
 						}
 					}
 				}
-				
+
 				repaint();
 			}
 		});

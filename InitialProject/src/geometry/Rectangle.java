@@ -48,10 +48,8 @@ public class Rectangle extends Shape {
 	}
 
 	public boolean contains(int x, int y) {
-		if (this.upperLeftPoint.getX() <= x && 
-				this.upperLeftPoint.getY() <= y && 
-				x <= this.upperLeftPoint.getX() + width 
-				&& y <= this.upperLeftPoint.getY() + height ) {
+		if (this.upperLeftPoint.getX() <= x && this.upperLeftPoint.getY() <= y
+				&& x <= this.upperLeftPoint.getX() + width && y <= this.upperLeftPoint.getY() + height) {
 			return true;
 		}
 		return false;
@@ -60,23 +58,20 @@ public class Rectangle extends Shape {
 	public Point getUpperLeftPoint() {
 		return upperLeftPoint;
 	}
-	
-	
+
 	public Point getUpperLeft() {
 		return upperLeftPoint;
 	}
 
 	@Override
 	public void draw(Graphics g) {
-	
+
 		g.setColor(getInnerColor());
 		g.fillRect(upperLeftPoint.getX(), upperLeftPoint.getY(), width, height);
-		
-		
+
 		g.setColor(getEdgeColor());
 		g.drawRect(upperLeftPoint.getX(), upperLeftPoint.getY(), width, height);
-		
-		
+
 		if (isSelected()) {
 			g.setColor(Color.BLUE);
 			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() - 2, 4, 4);
@@ -111,8 +106,7 @@ public class Rectangle extends Shape {
 	public int getWidth() {
 		return width;
 	}
-	
-	
+
 	public int getRectangleWidth() {
 		return width;
 	}
@@ -124,8 +118,7 @@ public class Rectangle extends Shape {
 	public int getHeight() {
 		return height;
 	}
-	
-	
+
 	public int getRectangleHeight() {
 		return height;
 	}
@@ -133,7 +126,6 @@ public class Rectangle extends Shape {
 	public void setHeight(int height) {
 		this.height = height;
 	}
-
 
 	@Override
 	public void setEdgeColor(Color edgeColor) {

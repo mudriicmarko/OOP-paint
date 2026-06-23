@@ -15,64 +15,60 @@ import javax.swing.SwingConstants;
 
 public class DlgDonut extends JDialog {
 
-	private JTextField txtInnerRadius;
-	private JTextField txtOuterRadius;
-	private boolean confirm = false; 
+	private JTextField txtX, txtY, txtOuterRadius, txtInnerRadius;
+	private boolean confirm = false;
 
 	public DlgDonut() {
-		
 		setModal(true);
 		setTitle("Donut properties");
-		setSize(300, 180); 
-		setLocationRelativeTo(null); 
+		setSize(300, 200);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 
-
 		JPanel pnlCenter = new JPanel();
-		pnlCenter.setLayout(new GridLayout(2, 2, 5, 5)); 
+		pnlCenter.setLayout(new GridLayout(4, 2, 5, 5));
 		
-		JLabel lblInnerRadius = new JLabel("Inner radius:", SwingConstants.CENTER);
-		txtInnerRadius = new JTextField();
+		pnlCenter.add(new JLabel("Center X:", SwingConstants.CENTER));
+		txtX = new JTextField();
+		pnlCenter.add(txtX);
 		
-		JLabel lblOuterRadius = new JLabel("Outer radius:", SwingConstants.CENTER);
+		pnlCenter.add(new JLabel("Center Y:", SwingConstants.CENTER));
+		txtY = new JTextField();
+		pnlCenter.add(txtY);
+		
+		pnlCenter.add(new JLabel("Outer Radius:", SwingConstants.CENTER));
 		txtOuterRadius = new JTextField();
-		
-		pnlCenter.add(lblInnerRadius);
-		pnlCenter.add(txtInnerRadius);
-		pnlCenter.add(lblOuterRadius);
 		pnlCenter.add(txtOuterRadius);
+		
+		pnlCenter.add(new JLabel("Inner Radius:", SwingConstants.CENTER));
+		txtInnerRadius = new JTextField();
+		pnlCenter.add(txtInnerRadius);
+		
 		getContentPane().add(pnlCenter, BorderLayout.CENTER);
 
-		
 		JPanel pnlButtons = new JPanel();
 		pnlButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		
 		JButton btnOK = new JButton("OK");
 		JButton btnCancel = new JButton("Cancel");
-		
 		pnlButtons.add(btnOK);
 		pnlButtons.add(btnCancel);
 		getContentPane().add(pnlButtons, BorderLayout.SOUTH);
 
-		
-
 		btnOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int innerRadius = Integer.parseInt(txtInnerRadius.getText().trim());
-					int outerRadius = Integer.parseInt(txtOuterRadius.getText().trim());
+					int x = Integer.parseInt(txtX.getText().trim());
+					int y = Integer.parseInt(txtY.getText().trim());
+					int outer = Integer.parseInt(txtOuterRadius.getText().trim());
+					int inner = Integer.parseInt(txtInnerRadius.getText().trim());
 					
-		
-					if (innerRadius <= 0 || outerRadius <= 0) {
+					if (outer <= 0 || inner <= 0) {
 						JOptionPane.showMessageDialog(null, "Radii must be greater than 0!", "Error", JOptionPane.ERROR_MESSAGE);
-					} 
-					
-					else if (innerRadius >= outerRadius) {
+					} else if (inner >= outer) {
 						JOptionPane.showMessageDialog(null, "Inner radius must be smaller than outer radius!", "Error", JOptionPane.ERROR_MESSAGE);
-					} 
-					else {
-						confirm = true;    
-						setVisible(false); 
+					} else {
+						confirm = true;
+						setVisible(false);
 					}
 				} catch (NumberFormatException nfe) {
 					JOptionPane.showMessageDialog(null, "Please enter valid integer numbers!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -82,34 +78,28 @@ public class DlgDonut extends JDialog {
 
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				confirm = false; 
+				confirm = false;
 				setVisible(false);
 			}
 		});
 	}
 
-	
-	public boolean isConfirm() {
-		return confirm;
-	}
+	public boolean isConfirm() { return confirm; }
+	public int getXCoord() { return Integer.parseInt(txtX.getText().trim()); }
+	public int getYCoord() { return Integer.parseInt(txtY.getText().trim()); }
+	public int getOuterRadius() { return Integer.parseInt(txtOuterRadius.getText().trim()); }
+	public int getInnerRadius() { return Integer.parseInt(txtInnerRadius.getText().trim()); }
 
-	public int getInnerRadius() {
-		return Integer.parseInt(txtInnerRadius.getText().trim());
-	}
+	public void setTxtXText(String val) { txtX.setText(val); }
+	public void setTxtYText(String val) { txtY.setText(val); }
+	public void setTxtOuterRadiusText(String val) { txtOuterRadius.setText(val); }
+	public void setTxtInnerRadiusText(String val) { txtInnerRadius.setText(val); }
 
-	public int getOuterRadius() {
-		return Integer.parseInt(txtOuterRadius.getText().trim());
-	}
-
-
-	public void setTxtInnerRadiusText(String valueOf) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public void setTxtOuterRadiusText(String valueOf) {
-		// TODO Auto-generated method stub
-		
+	// Metoda za zaključavanje polja kada se radi POP sa steka
+	public void setFieldsEnabled(boolean enabled) {
+		txtX.setEnabled(enabled);
+		txtY.setEnabled(enabled);
+		txtOuterRadius.setEnabled(enabled);
+		txtInnerRadius.setEnabled(enabled);
 	}
 }

@@ -49,7 +49,7 @@ public class Donut extends Circle {
 		double d = getCenter().distance(x, y);
 		return d <= getRadius() && d >= innerRadius;
 	}
-	
+
 	@Override
 	public boolean contains(Point p) {
 		return this.contains(p.getX(), p.getY());
@@ -62,29 +62,21 @@ public class Donut extends Circle {
 	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
-		
-		Ellipse2D outerCircle = new Ellipse2D.Double(
-				getCenter().getX() - getRadius(), 
-				getCenter().getY() - getRadius(), 
-				2 * getRadius(), 
-				2 * getRadius()
-		);
-				
-		Ellipse2D innerCircle = new Ellipse2D.Double(
-				getCenter().getX() - innerRadius, 
-				getCenter().getY() - innerRadius, 
-				2 * innerRadius, 
-				2 * innerRadius
-		);
-		
+
+		Ellipse2D outerCircle = new Ellipse2D.Double(getCenter().getX() - getRadius(), getCenter().getY() - getRadius(),
+				2 * getRadius(), 2 * getRadius());
+
+		Ellipse2D innerCircle = new Ellipse2D.Double(getCenter().getX() - innerRadius, getCenter().getY() - innerRadius,
+				2 * innerRadius, 2 * innerRadius);
+
 		Area donutArea = new Area(outerCircle);
 		Area holeArea = new Area(innerCircle);
-		
+
 		donutArea.subtract(holeArea);
-		
+
 		g2d.setColor(getInnerColor());
 		g2d.fill(donutArea);
-		
+
 		g2d.setColor(getEdgeColor());
 		g2d.draw(outerCircle);
 		g2d.draw(innerCircle);
@@ -92,12 +84,12 @@ public class Donut extends Circle {
 		if (isSelected()) {
 			g2d.setColor(Color.BLUE);
 			g2d.drawRect(getCenter().getX() - 2, getCenter().getY() - 2, 4, 4);
-			
+
 			g2d.drawRect(getCenter().getX() - getRadius() - 2, getCenter().getY() - 2, 4, 4);
 			g2d.drawRect(getCenter().getX() + getRadius() - 2, getCenter().getY() - 2, 4, 4);
 			g2d.drawRect(getCenter().getX() - 2, getCenter().getY() - getRadius() - 2, 4, 4);
 			g2d.drawRect(getCenter().getX() - 2, getCenter().getY() + getRadius() - 2, 4, 4);
-			
+
 			g2d.drawRect(getCenter().getX() - innerRadius - 2, getCenter().getY() - 2, 4, 4);
 			g2d.drawRect(getCenter().getX() + innerRadius - 2, getCenter().getY() - 2, 4, 4);
 			g2d.drawRect(getCenter().getX() - 2, getCenter().getY() - innerRadius - 2, 4, 4);

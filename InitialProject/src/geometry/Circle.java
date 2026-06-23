@@ -7,6 +7,8 @@ public class Circle extends Shape {
 
 	private Point center;
 	private int radius;
+	private Color edgeColor = Color.BLACK;   // Dodato kao osiguranje ako fali u Shape
+	private Color innerColor = Color.WHITE;  // Dodato kao osiguranje ako fali u Shape
 
 	public Circle() {
 
@@ -30,10 +32,12 @@ public class Circle extends Shape {
 		return 2 * radius * Math.PI;
 	}
 
+	@Override
 	public String toString() {
 		return "Center: " + center.toString() + ", radius = " + radius;
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Circle) {
 			Circle secondCircle = (Circle) obj;
@@ -53,18 +57,17 @@ public class Circle extends Shape {
 		return this.contains(p.getX(), p.getY());
 	}
 
-	// POPRAVLJENO: Metoda sada aktivno koristi izabrane boje za crtanje i punjenje
 	@Override
 	public void draw(Graphics g) {
 		// 1. Prvo bojimo unutrašnjost kruga
 		g.setColor(getInnerColor());
 		g.fillOval(center.getX() - radius, center.getY() - radius, 2 * radius, 2 * radius);
-		
+
 		// 2. Preko toga crtamo ivicu (konturu) kruga
 		g.setColor(getEdgeColor());
 		g.drawOval(center.getX() - radius, center.getY() - radius, 2 * radius, 2 * radius);
-		
-		// 3. Ako je selektovan, crtamo plave kvadrate (za potrebe ispita na centru i ivicama)
+
+		// 3. Ako je selektovan, crtamo plave kvadrate na centru i ivicama
 		if (isSelected()) {
 			g.setColor(Color.BLUE);
 			g.drawRect(center.getX() - 2, center.getY() - 2, 4, 4);
@@ -74,8 +77,6 @@ public class Circle extends Shape {
 			g.drawRect(center.getX() - 2, center.getY() + radius - 2, 4, 4);
 		}
 	}
-
-
 
 	@Override
 	public void moveTo(int x, int y) {
@@ -108,20 +109,27 @@ public class Circle extends Shape {
 	}
 
 	public void setRadius(int radius) throws Exception {
-		if (radius < 0) {
-			throw new Exception("Radius ne sme biti manji od 0!");
+		// ISPRAVLJENO: Radijus ne sme biti ni 0 ni negativan po tekstu zadatka!
+		if (radius <= 0) {
+			throw new Exception("Radius must be greater than 0!");
 		}
 		this.radius = radius;
 	}
 
-	// POPRAVLJENO: Prosleđujemo boju roditeljskoj klasi Shape koja je zapravo čuva u memoriji
-	@Override
-	public void setEdgeColor(Color edgeColor) {
-		super.setEdgeColor(edgeColor);
+	// Geteri i seteri koji bezbedno rukuju bojama i skidaju crvenilo
+	public Color getEdgeColor() {
+		return edgeColor;
 	}
 
-	@Override
+	public void setEdgeColor(Color edgeColor) {
+		this.edgeColor = edgeColor;
+	}
+
+	public Color getInnerColor() {
+		return innerColor;
+	}
+
 	public void setInnerColor(Color innerColor) {
-		super.setInnerColor(innerColor);
+		this.innerColor = innerColor;
 	}
 }
