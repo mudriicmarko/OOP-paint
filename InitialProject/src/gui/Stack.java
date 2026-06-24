@@ -18,7 +18,7 @@ import geometry.Point;
 public class Stack {
 
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("Stack - Last In First Out (LIFO)");
+		JFrame frame = new JFrame("Stack)");
 		frame.setSize(500, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
