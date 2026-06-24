@@ -63,7 +63,7 @@ public class DlgDonut extends JDialog {
 					int inner = Integer.parseInt(txtInnerRadius.getText().trim());
 					
 					if (outer <= 0 || inner <= 0) {
-						JOptionPane.showMessageDialog(null, "Radii must be greater than 0!", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Radius must be greater than 0!", "Error", JOptionPane.ERROR_MESSAGE);
 					} else if (inner >= outer) {
 						JOptionPane.showMessageDialog(null, "Inner radius must be smaller than outer radius!", "Error", JOptionPane.ERROR_MESSAGE);
 					} else {
@@ -95,7 +95,7 @@ public class DlgDonut extends JDialog {
 	public void setTxtOuterRadiusText(String val) { txtOuterRadius.setText(val); }
 	public void setTxtInnerRadiusText(String val) { txtInnerRadius.setText(val); }
 
-	// Metoda za zaključavanje polja kada se radi POP sa steka
+	
 	public void setFieldsEnabled(boolean enabled) {
 		txtX.setEnabled(enabled);
 		txtY.setEnabled(enabled);
